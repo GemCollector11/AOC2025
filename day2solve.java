@@ -47,24 +47,21 @@ public class day2solve {
             maxval = Long.parseLong(input.get(i).replace(",", "").split("-")[1]);
 
             for (Long k = Math.abs(minval); k <= Math.abs(maxval); k++) {
-                String minId = input.get(i).replace(",", "").split("-")[0];
-                String maxId = input.get(i).replace(",", "").split("-")[1];
-
                 String value = k.toString();
                 boolean useDiv1 = true;
                 boolean useDiv2 = true;
                 boolean useDiv3 = true;
                 boolean useDiv4 = true;
                 boolean useDiv5 = true;
-                boolean isInvalid = true;
+                boolean isInvalid = false;
 
                 for (int j = 0; j <= value.length(); j++) {
                     int div = 0;
-                    int div1 = 2;
-                    int div2 = 3;
-                    int div3 = 4;
-                    int div4 = 5;
-                    int div5 = 7;
+                    int div1 = 1;
+                    int div2 = 2;
+                    int div3 = 3;
+                    int div4 = 4;
+                    int div5 = 5;
 
                     if (useDiv1 && value.length() % div1 == 0) {
                         div = div1;
@@ -77,10 +74,10 @@ public class day2solve {
                     } else if (useDiv5 && value.length() % div5 == 0) {
                         div = div5;
                     } else {
-                        div = div1;
+                        break;
                     }
-                    String[] numSet = new String[div];
-                    int lengthOfSubval = (value.length() / div);
+                    String[] numSet = new String[value.length() / div];
+                    int lengthOfSubval = (div);
 
                     for (int l = 0; l < numSet.length; l++) {
                         int len = l * lengthOfSubval;
@@ -93,45 +90,16 @@ public class day2solve {
                             if (numSet[m - 1].equals(numSet[m])) {
                                 isInvalid = true;
                             } else {
-                                if (value.length() > 3) {
-                                    if (useDiv1) {
-                                        useDiv1 = false;
-                                        useDiv2 = true;
-                                        useDiv3 = true;
-                                        useDiv4 = true;
-                                        useDiv5 = true;
-                                    } else if (useDiv2) {
-                                        useDiv1 = false;
-                                        useDiv2 = false;
-                                        useDiv3 = true;
-                                        useDiv4 = true;
-                                        useDiv5 = true;
-                                    } else if (useDiv3) {
-                                        useDiv1 = false;
-                                        useDiv2 = false;
-                                        useDiv3 = false;
-                                        useDiv4 = true;
-                                        useDiv5 = true;
-                                    } else if (useDiv4) {
-                                        useDiv1 = false;
-                                        useDiv2 = false;
-                                        useDiv3 = false;
-                                        useDiv4 = false;
-                                        useDiv5 = true;
-                                    } else if (useDiv5) {
-                                        useDiv1 = true;
-                                        useDiv2 = true;
-                                        useDiv3 = true;
-                                        useDiv4 = true;
-                                        useDiv5 = true;
-                                    }
-                                } else if (value.length() == 3) {
-                                    if (useDiv1) {
-                                        useDiv1 = false;
-                                        useDiv2 = true;
-                                    }
-                                } else {
-                                    useDiv1 = true;
+                                if (useDiv1) {
+                                    useDiv1 = false;
+                                } else if (useDiv2) {
+                                    useDiv2 = false;
+                                } else if (useDiv3) {
+                                    useDiv3 = false;
+                                } else if (useDiv4) {
+                                    useDiv4 = false;
+                                } else if (useDiv5) {
+                                    useDiv5 = false;
                                 }
                                 isInvalid = false;
                                 break;
@@ -139,6 +107,7 @@ public class day2solve {
                         }
                     }
                     if (isInvalid) {
+                        System.out.println(k);
                         count += k;
                         break;
                     }
@@ -146,7 +115,6 @@ public class day2solve {
             }
 
         }
-
         return count;
     }
 }
